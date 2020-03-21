@@ -29,17 +29,17 @@ while True:
         cv2.rectangle(frame, (x,y), (x+w, y+h), (0, 255, 0), 2)
         
         #resizing the overlaying image to the size of the face
-        s_img = cv2.resize(s_img, dsize=(w, h), interpolation=cv2.INTER_CUBIC)
+        res_img = cv2.resize(s_img, dsize=(w, h), interpolation=cv2.INTER_CUBIC)
         
         #putting the new image on top of the face without its background
-        y1, y2 = y, y + s_img.shape[0]
-        x1, x2 = x, x + s_img.shape[1]
+        y1, y2 = y, y + res_img.shape[0]
+        x1, x2 = x, x + res_img.shape[1]
 
-        alpha_s = s_img[:, :, 3] / 255.0
+        alpha_s = res_img[:, :, 3] / 255.0
         alpha_l = 1.0 - alpha_s
 
         for c in range(0, 3):
-            frame[y1:y2, x1:x2, c] = (alpha_s * s_img[:, :, c] +
+            frame[y1:y2, x1:x2, c] = (alpha_s * res_img[:, :, c] +
                                     alpha_l * frame[y1:y2, x1:x2, c])
 
 
